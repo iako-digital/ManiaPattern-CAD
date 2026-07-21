@@ -6,8 +6,13 @@ import en from "../public/locales/en/common.json";
 import es from "../public/locales/es/common.json";
 import ka from "../public/locales/ka/common.json";
 import ru from "../public/locales/ru/common.json";
+import zh from "../public/locales/zh/common.json";
+import tr from "../public/locales/tr/common.json";
+import fr from "../public/locales/fr/common.json";
+import it from "../public/locales/it/common.json";
+import hi from "../public/locales/hi/common.json";
 
-export const SUPPORTED_LANGUAGES = ["ka", "en", "ru"] as const;
+export const SUPPORTED_LANGUAGES = ["ka", "en", "zh", "tr", "fr", "it", "hi", "ru"] as const;
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
 
 if (!i18next.isInitialized) {
@@ -17,6 +22,11 @@ if (!i18next.isInitialized) {
       es: { common: es },
       ka: { common: ka },
       ru: { common: ru },
+      zh: { common: zh },
+      tr: { common: tr },
+      fr: { common: fr },
+      it: { common: it },
+      hi: { common: hi },
     },
     lng: "en",
     fallbackLng: "en",

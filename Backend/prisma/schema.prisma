@@ -22,7 +22,14 @@ enum PurchaseStatus {
 
 enum UserStatus {
   ACTIVE
+  SUSPENDED
   PENDING_DELETION
+}
+
+enum ModerationStatus {
+  PENDING
+  APPROVED
+  REJECTED
 }
 
 model User {
@@ -105,7 +112,8 @@ model PatternItem {
   dxfFileUrl         String?
   pdfFileUrl         String?
   ecoEfficiencyScore Float?
-  rating             Float?   @default(0)
+  rating             Float?            @default(0)
+  moderationStatus   ModerationStatus  @default(PENDING)
 
   authorId String
   author   User   @relation("AuthoredPatterns", fields: [authorId], references: [id], onDelete: Cascade)
@@ -118,6 +126,7 @@ model PatternItem {
 
   @@index([authorId])
   @@index([category])
+  @@index([moderationStatus])
 }
 
 model Purchase {

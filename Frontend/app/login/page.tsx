@@ -1,0 +1,82 @@
+"use client";
+
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useAuth } from "@/components/auth/AuthProvider";
+
+export default function LoginPage() {
+  const { t } = useTranslation();
+  const { login } = useAuth();
+  const router = useRouter();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setSubmitting(true);
+    setError(null);
+    try {
+      await login(email, password);
+      router.push("/");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : t("auth.error.generic"));
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  return (
+    <main className="flex min-h-screen items-center justify-center bg-slate-950 p-8 text-slate-100">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-sm rounded-lg border border-slate-800 bg-slate-950/80 p-6"
+      >
+        <h1 className="text-lg font-semibold">{t("auth.login.title")}</h1>
+
+        <label className="mt-4 flex flex-col gap-1 text-xs text-slate-400">
+          {t("auth.login.email")}
+          <input
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="rounded-md border border-slate-800 bg-slate-900/60 px-2 py-1.5 text-sm text-slate-100 focus:border-sky-600 focus:outline-none"
+          />
+        </label>
+
+        <label className="mt-3 flex flex-col gap-1 text-xs text-slate-400">
+          {t("auth.login.password")}
+          <input
+            type="password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="rounded-md border border-slate-800 bg-slate-900/60 px-2 py-1.5 text-sm text-slate-100 focus:border-sky-600 focus:outline-none"
+          />
+        </label>
+
+        {error && <p className="mt-3 text-xs text-red-400">{error}</p>}
+
+        <button
+          type="submit"
+          disabled={submitting}
+          className="mt-5 w-full rounded-md border border-sky-700 bg-sky-700/90 px-3 py-1.5 text-sm font-medium text-white hover:bg-sky-600 disabled:opacity-60"
+        >
+          {t("auth.login.submit")}
+        </button>
+
+        <p className="mt-4 text-center text-xs text-slate-500">
+          {t("auth.login.noAccount")}{" "}
+          <Link href="/register" className="text-sky-300 hover:text-sky-200">
+            {t("auth.login.registerLink")}
+          </Link>
+        </p>
+      </form>
+    </main>
+  );
+}

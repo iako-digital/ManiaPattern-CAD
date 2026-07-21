@@ -6,12 +6,7 @@ const RECOVERY_WINDOW_MS = 60 * 24 * 60 * 60 * 1000;
 
 export async function deletePaymentMethod(req: Request, res: Response) {
   const { id } = req.params;
-  const { userId } = req.body as { userId?: string };
-
-  if (!userId) {
-    res.status(400).json({ error: "userId is required" });
-    return;
-  }
+  const userId = req.auth!.id;
 
   const method = await prisma.savedPaymentMethod.findUnique({ where: { id } });
   if (!method || method.userId !== userId) {
@@ -24,16 +19,8 @@ export async function deletePaymentMethod(req: Request, res: Response) {
 }
 
 export async function requestAccountDeletion(req: Request, res: Response) {
-  const { userId, confirmation, password } = req.body as {
-    userId?: string;
-    confirmation?: string;
-    password?: string;
-  };
-
-  if (!userId) {
-    res.status(400).json({ error: "userId is required" });
-    return;
-  }
+  const { confirmation, password } = req.body as { confirmation?: string; password?: string };
+  const userId = req.auth!.id;
 
   const user = await prisma.user.findUnique({ where: { id: userId } });
   if (!user) {
@@ -72,12 +59,7 @@ export async function requestAccountDeletion(req: Request, res: Response) {
 }
 
 export async function cancelAccountDeletion(req: Request, res: Response) {
-  const { userId } = req.body as { userId?: string };
-
-  if (!userId) {
-    res.status(400).json({ error: "userId is required" });
-    return;
-  }
+  const userId = req.auth!.id;
 
   const user = await prisma.user.findUnique({ where: { id: userId } });
   if (!user) {

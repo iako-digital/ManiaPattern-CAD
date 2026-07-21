@@ -3,12 +3,12 @@
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "@/components/auth/AuthProvider";
+import { API_BASE } from "@/lib/apiBase";
 import DeleteAccountModal from "@/components/settings/DeleteAccountModal";
 import SavedCardsPanel, { type SavedCard } from "@/components/settings/SavedCardsPanel";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8080";
-
-type AccountStatus = "ACTIVE" | "PENDING_DELETION";
+type AccountStatus = "ACTIVE" | "SUSPENDED" | "PENDING_DELETION";
 
 async function readErrorMessage(res: Response): Promise<string> {
   try {
@@ -21,8 +21,8 @@ async function readErrorMessage(res: Response): Promise<string> {
 
 export default function SettingsPage() {
   const { t } = useTranslation();
+  const { user, loading: authLoading } = useAuth();
 
-  const [userId, setUserId] = useState("");
   const [cards, setCards] = useState<SavedCard[]>([
     { id: "demo-card-1", brand: "visa", last4: "4242", isDefault: true },
     { id: "demo-card-2", brand: "mastercard", last4: "4444", isDefault: false },
@@ -42,16 +42,11 @@ export default function SettingsPage() {
   }
 
   async function handleRemoveCard(id: string) {
-    if (!userId) {
-      showToast(t("settings.userIdRequired"));
-      return;
-    }
     setRemovingCardId(id);
     try {
       const res = await fetch(`${API_BASE}/api/user/payment-methods/${id}`, {
         method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId }),
+        credentials: "include",
       });
       if (!res.ok && res.status !== 404) {
         throw new Error(await readErrorMessage(res));
@@ -66,11 +61,11 @@ export default function SettingsPage() {
   }
 
   async function handleConfirmDeletion(payload: { confirmation?: string; password?: string }) {
-    if (!userId) throw new Error(t("settings.userIdRequired"));
     const res = await fetch(`${API_BASE}/api/user/request-deletion`, {
       method: "POST",
+      credentials: "include",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId, ...payload }),
+      body: JSON.stringify(payload),
     });
     if (!res.ok) throw new Error(await readErrorMessage(res));
     const body = (await res.json()) as { status: AccountStatus; scheduledPermanentDeletionAt: string };
@@ -81,15 +76,10 @@ export default function SettingsPage() {
   }
 
   async function handleCancelDeletion() {
-    if (!userId) {
-      showToast(t("settings.userIdRequired"));
-      return;
-    }
     try {
       const res = await fetch(`${API_BASE}/api/user/cancel-deletion`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId }),
+        credentials: "include",
       });
       if (!res.ok) throw new Error(await readErrorMessage(res));
       setAccountStatus("ACTIVE");
@@ -100,12 +90,37 @@ export default function SettingsPage() {
     }
   }
 
+  if (authLoading) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-slate-950 text-slate-400">
+        …
+      </main>
+    );
+  }
+
+  if (!user) {
+    return (
+      <main className="flex min-h-screen flex-col items-center justify-center gap-4 bg-slate-950 p-8 text-slate-100">
+        <p className="text-sm text-slate-400">{t("auth.loggedInAs")}: —</p>
+        <Link
+          href="/login"
+          className="rounded-md border border-sky-700 bg-sky-700/90 px-4 py-2 text-sm font-medium text-white hover:bg-sky-600"
+        >
+          {t("header.login")}
+        </Link>
+      </main>
+    );
+  }
+
   return (
     <main className="mx-auto flex min-h-screen max-w-2xl flex-col gap-6 bg-slate-950 p-8 text-slate-100">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-xl font-semibold tracking-tight">{t("settings.title")}</h1>
           <p className="text-sm text-slate-500">{t("settings.subtitle")}</p>
+          <p className="mt-1 text-xs text-slate-600">
+            {t("auth.loggedInAs")}: {user.email}
+          </p>
         </div>
         <Link
           href="/"
@@ -114,17 +129,6 @@ export default function SettingsPage() {
           ← Canvas
         </Link>
       </div>
-
-      <label className="flex flex-col gap-1 text-xs text-slate-400">
-        {t("settings.userIdLabel")}
-        <input
-          value={userId}
-          onChange={(e) => setUserId(e.target.value)}
-          placeholder="user-uuid"
-          className="rounded-md border border-slate-800 bg-slate-900/60 px-2 py-1.5 text-sm text-slate-100 focus:border-sky-600 focus:outline-none"
-        />
-        <span className="text-slate-600">{t("settings.userIdHint")}</span>
-      </label>
 
       <SavedCardsPanel cards={cards} removingId={removingCardId} onRemove={handleRemoveCard} />
 
