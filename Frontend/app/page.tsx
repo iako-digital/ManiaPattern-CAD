@@ -57,7 +57,7 @@ export default function HomePage() {
   });
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden bg-slate-950 text-slate-100">
+    <div className="flex h-screen flex-col overflow-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
       <Header
         modelName={t("header.untitled")}
         justSaved={justSaved}
@@ -94,9 +94,9 @@ export default function HomePage() {
             onToast={showToast}
           />
 
-          <div className="pointer-events-none absolute bottom-2 left-2 flex items-center gap-3 rounded-md border border-slate-800 bg-slate-950/80 px-3 py-1 text-[11px] text-slate-400 backdrop-blur">
+          <div className="pointer-events-none absolute bottom-2 left-2 flex items-center gap-3 rounded-md border border-slate-300 bg-white/80 px-3 py-1 text-[11px] text-slate-500 backdrop-blur dark:border-slate-800 dark:bg-slate-950/80 dark:text-slate-400">
             <span>{t("canvas.gridLabel")}</span>
-            <span className="h-3 w-px bg-slate-700" />
+            <span className="h-3 w-px bg-slate-300 dark:bg-slate-700" />
             <span>
               {t("status.zoom")}: {status.zoomPercent}%
             </span>
@@ -109,7 +109,7 @@ export default function HomePage() {
           </div>
 
           {toast && (
-            <div className="pointer-events-none absolute bottom-2 right-2 rounded-md border border-emerald-700 bg-emerald-950/80 px-3 py-1 text-[11px] text-emerald-200 backdrop-blur">
+            <div className="pointer-events-none absolute bottom-2 right-2 rounded-md border border-emerald-600 bg-emerald-50/90 px-3 py-1 text-[11px] text-emerald-700 backdrop-blur dark:border-emerald-700 dark:bg-emerald-950/80 dark:text-emerald-200">
               {toast}
             </div>
           )}

@@ -41,30 +41,32 @@ export default function InfraTab() {
     };
   }, []);
 
-  if (error) return <p className="text-sm text-red-400">{error}</p>;
+  if (error) return <p className="text-sm text-red-500 dark:text-red-400">{error}</p>;
   if (!infra) return <p className="text-sm text-slate-500">…</p>;
 
   return (
     <div className="flex flex-col gap-3">
       <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-        <div className="rounded-lg border border-slate-800 bg-slate-950/80 p-4">
+        <div className="rounded-lg border border-slate-300 bg-white/80 p-4 dark:border-slate-800 dark:bg-slate-950/80">
           <p className="text-[11px] uppercase tracking-wide text-slate-500">Database</p>
-          <p className={`mt-1 text-sm font-medium ${infra.dbHealthy ? "text-emerald-300" : "text-red-300"}`}>
+          <p
+            className={`mt-1 text-sm font-medium ${infra.dbHealthy ? "text-emerald-600 dark:text-emerald-300" : "text-red-600 dark:text-red-300"}`}
+          >
             {infra.dbHealthy ? t("admin.infra.dbHealthy") : t("admin.infra.dbDown")}
           </p>
         </div>
-        <div className="rounded-lg border border-slate-800 bg-slate-950/80 p-4">
+        <div className="rounded-lg border border-slate-300 bg-white/80 p-4 dark:border-slate-800 dark:bg-slate-950/80">
           <p className="text-[11px] uppercase tracking-wide text-slate-500">{t("admin.infra.uptime")}</p>
-          <p className="mt-1 text-sm font-medium text-slate-100">{formatUptime(infra.uptimeSeconds)}</p>
+          <p className="mt-1 text-sm font-medium text-slate-900 dark:text-slate-100">{formatUptime(infra.uptimeSeconds)}</p>
         </div>
-        <div className="rounded-lg border border-slate-800 bg-slate-950/80 p-4">
+        <div className="rounded-lg border border-slate-300 bg-white/80 p-4 dark:border-slate-800 dark:bg-slate-950/80">
           <p className="text-[11px] uppercase tracking-wide text-slate-500">{t("admin.infra.nodeVersion")}</p>
-          <p className="mt-1 text-sm font-medium text-slate-100">{infra.nodeVersion}</p>
+          <p className="mt-1 text-sm font-medium text-slate-900 dark:text-slate-100">{infra.nodeVersion}</p>
         </div>
-        <div className="rounded-lg border border-slate-800 bg-slate-950/80 p-4">
+        <div className="rounded-lg border border-slate-300 bg-white/80 p-4 dark:border-slate-800 dark:bg-slate-950/80">
           <p className="text-[11px] uppercase tracking-wide text-slate-500">Azure Blob</p>
           <p
-            className={`mt-1 text-sm font-medium ${infra.blobStorageConfigured ? "text-emerald-300" : "text-slate-400"}`}
+            className={`mt-1 text-sm font-medium ${infra.blobStorageConfigured ? "text-emerald-600 dark:text-emerald-300" : "text-slate-500 dark:text-slate-400"}`}
           >
             {infra.blobStorageConfigured ? t("admin.infra.blobConfigured") : t("admin.infra.blobNotConfigured")}
           </p>
@@ -73,7 +75,7 @@ export default function InfraTab() {
 
       <div className="rounded-lg border border-slate-800 bg-slate-950/80 p-4">
         <p className="text-[11px] uppercase tracking-wide text-slate-500">{t("admin.infra.exportQueueTitle")}</p>
-        <p className="mt-1 text-xs text-amber-300">{infra.exportQueue.note}</p>
+        <p className="mt-1 text-xs text-amber-600 dark:text-amber-300">{infra.exportQueue.note}</p>
       </div>
     </div>
   );

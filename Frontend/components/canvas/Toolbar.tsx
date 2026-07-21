@@ -32,8 +32,8 @@ function ToolButton({
       onClick={onClick}
       className={`w-full rounded-md border px-2 py-1.5 text-left text-xs transition-colors ${
         active
-          ? "border-sky-500 bg-sky-500/20 text-sky-200"
-          : "border-slate-800 bg-slate-900/60 text-slate-300 hover:border-slate-600 hover:bg-slate-800"
+          ? "border-sky-500 bg-sky-500/20 text-sky-700 dark:text-sky-200"
+          : "border-slate-300 bg-slate-100 text-slate-700 hover:border-slate-400 hover:bg-slate-200 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:bg-slate-800"
       }`}
     >
       {children}
@@ -46,7 +46,7 @@ function ActionButton({ onClick, children }: { onClick: () => void; children: Re
     <button
       type="button"
       onClick={onClick}
-      className="w-full rounded-md border border-slate-800 bg-slate-900/60 px-2 py-1.5 text-left text-xs text-slate-300 transition-colors hover:border-emerald-600 hover:bg-emerald-900/30 hover:text-emerald-200"
+      className="w-full rounded-md border border-slate-300 bg-slate-100 px-2 py-1.5 text-left text-xs text-slate-700 transition-colors hover:border-emerald-600 hover:bg-emerald-100 hover:text-emerald-700 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-300 dark:hover:bg-emerald-900/30 dark:hover:text-emerald-200"
     >
       {children}
     </button>
@@ -55,7 +55,7 @@ function ActionButton({ onClick, children }: { onClick: () => void; children: Re
 
 function GroupPanel({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-lg border border-slate-800 bg-slate-950/80 p-2 shadow-lg backdrop-blur">
+    <div className="rounded-lg border border-slate-300 bg-white/80 p-2 shadow-lg backdrop-blur dark:border-slate-800 dark:bg-slate-950/80">
       <h3 className="mb-1.5 px-1 text-[10px] font-semibold uppercase tracking-wide text-slate-500">
         {title}
       </h3>
@@ -110,7 +110,7 @@ export default function Toolbar({
           value={annotationText}
           onChange={(e) => onAnnotationTextChange(e.target.value)}
           placeholder={t("toolbar.groups.annotation.placeholder") ?? undefined}
-          className="w-full rounded-md border border-slate-800 bg-slate-900/60 px-2 py-1 text-xs text-slate-200 placeholder:text-slate-600 focus:border-sky-600 focus:outline-none"
+          className="w-full rounded-md border border-slate-300 bg-slate-100 px-2 py-1 text-xs text-slate-800 placeholder:text-slate-400 focus:border-sky-600 focus:outline-none dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-200 dark:placeholder:text-slate-600"
         />
         <label className="flex items-center gap-2 px-1 text-[11px] text-slate-400">
           {t("toolbar.groups.annotation.rotation")}
@@ -118,7 +118,7 @@ export default function Toolbar({
             type="number"
             value={annotationRotation}
             onChange={(e) => onAnnotationRotationChange(Number(e.target.value))}
-            className="w-16 rounded-md border border-slate-800 bg-slate-900/60 px-1.5 py-0.5 text-xs text-slate-200 focus:border-sky-600 focus:outline-none"
+            className="w-16 rounded-md border border-slate-300 bg-slate-100 px-1.5 py-0.5 text-xs text-slate-800 focus:border-sky-600 focus:outline-none dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-200"
           />
         </label>
         <ToolButton active={activeTool === "annotation"} onClick={() => onSelectTool("annotation")}>

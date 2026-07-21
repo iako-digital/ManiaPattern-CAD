@@ -27,17 +27,17 @@ export default function AdminPage() {
 
   if (loading) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-slate-950 text-slate-400">…</main>
+      <main className="flex min-h-screen items-center justify-center bg-slate-50 text-slate-500 dark:bg-slate-950 dark:text-slate-400">…</main>
     );
   }
 
   if (!user || user.role !== "ADMIN") {
     return (
-      <main className="flex min-h-screen flex-col items-center justify-center gap-4 bg-slate-950 p-8 text-slate-100">
-        <p className="text-sm text-slate-400">{t("admin.accessDenied")}</p>
+      <main className="flex min-h-screen flex-col items-center justify-center gap-4 bg-slate-50 p-8 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+        <p className="text-sm text-slate-500 dark:text-slate-400">{t("admin.accessDenied")}</p>
         <Link
           href="/"
-          className="rounded-md border border-slate-800 bg-slate-900/60 px-3 py-1.5 text-xs text-slate-200 hover:border-sky-600 hover:bg-sky-900/30 hover:text-sky-200"
+          className="rounded-md border border-slate-300 bg-slate-100 px-3 py-1.5 text-xs text-slate-800 hover:border-sky-600 hover:bg-sky-100 hover:text-sky-700 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-200 dark:hover:bg-sky-900/30 dark:hover:text-sky-200"
         >
           ← Canvas
         </Link>
@@ -46,18 +46,18 @@ export default function AdminPage() {
   }
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-5xl flex-col gap-5 bg-slate-950 p-8 text-slate-100">
+    <main className="mx-auto flex min-h-screen max-w-5xl flex-col gap-5 bg-slate-50 p-8 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-semibold tracking-tight">{t("admin.title")}</h1>
         <Link
           href="/"
-          className="rounded-md border border-slate-800 bg-slate-900/60 px-3 py-1.5 text-xs text-slate-200 hover:border-sky-600 hover:bg-sky-900/30 hover:text-sky-200"
+          className="rounded-md border border-slate-300 bg-slate-100 px-3 py-1.5 text-xs text-slate-800 hover:border-sky-600 hover:bg-sky-100 hover:text-sky-700 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-200 dark:hover:bg-sky-900/30 dark:hover:text-sky-200"
         >
           ← Canvas
         </Link>
       </div>
 
-      <div className="flex flex-wrap gap-1 rounded-lg border border-slate-800 bg-slate-900/40 p-1">
+      <div className="flex flex-wrap gap-1 rounded-lg border border-slate-300 bg-slate-100/70 p-1 dark:border-slate-800 dark:bg-slate-900/40">
         {TABS.map((tab) => (
           <button
             key={tab.id}
@@ -65,8 +65,8 @@ export default function AdminPage() {
             onClick={() => setActiveTab(tab.id)}
             className={`rounded-md px-3 py-1.5 text-xs transition-colors ${
               activeTab === tab.id
-                ? "bg-sky-500/20 text-sky-200"
-                : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+                ? "bg-sky-500/20 text-sky-700 dark:text-sky-200"
+                : "text-slate-500 hover:bg-slate-200 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
             }`}
           >
             {t(tab.labelKey)}

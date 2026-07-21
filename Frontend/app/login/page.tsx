@@ -31,36 +31,36 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-slate-950 p-8 text-slate-100">
+    <main className="flex min-h-screen items-center justify-center bg-slate-50 p-8 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-sm rounded-lg border border-slate-800 bg-slate-950/80 p-6"
+        className="w-full max-w-sm rounded-lg border border-slate-300 bg-white/80 p-6 dark:border-slate-800 dark:bg-slate-950/80"
       >
         <h1 className="text-lg font-semibold">{t("auth.login.title")}</h1>
 
-        <label className="mt-4 flex flex-col gap-1 text-xs text-slate-400">
+        <label className="mt-4 flex flex-col gap-1 text-xs text-slate-500 dark:text-slate-400">
           {t("auth.login.email")}
           <input
             type="email"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="rounded-md border border-slate-800 bg-slate-900/60 px-2 py-1.5 text-sm text-slate-100 focus:border-sky-600 focus:outline-none"
+            className="rounded-md border border-slate-300 bg-slate-100 px-2 py-1.5 text-sm text-slate-900 focus:border-sky-600 focus:outline-none dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-100"
           />
         </label>
 
-        <label className="mt-3 flex flex-col gap-1 text-xs text-slate-400">
+        <label className="mt-3 flex flex-col gap-1 text-xs text-slate-500 dark:text-slate-400">
           {t("auth.login.password")}
           <input
             type="password"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="rounded-md border border-slate-800 bg-slate-900/60 px-2 py-1.5 text-sm text-slate-100 focus:border-sky-600 focus:outline-none"
+            className="rounded-md border border-slate-300 bg-slate-100 px-2 py-1.5 text-sm text-slate-900 focus:border-sky-600 focus:outline-none dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-100"
           />
         </label>
 
-        {error && <p className="mt-3 text-xs text-red-400">{error}</p>}
+        {error && <p className="mt-3 text-xs text-red-500 dark:text-red-400">{error}</p>}
 
         <button
           type="submit"
@@ -72,7 +72,7 @@ export default function LoginPage() {
 
         <p className="mt-4 text-center text-xs text-slate-500">
           {t("auth.login.noAccount")}{" "}
-          <Link href="/register" className="text-sky-300 hover:text-sky-200">
+          <Link href="/register" className="text-sky-600 hover:text-sky-700 dark:text-sky-300 dark:hover:text-sky-200">
             {t("auth.login.registerLink")}
           </Link>
         </p>

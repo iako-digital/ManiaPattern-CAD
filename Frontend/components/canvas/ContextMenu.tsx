@@ -55,7 +55,7 @@ export default function ContextMenu({
   return (
     <div
       ref={menuRef}
-      className="fixed z-50 min-w-[180px] rounded-lg border border-slate-700 bg-slate-900/95 py-1 shadow-2xl backdrop-blur"
+      className="fixed z-50 min-w-[180px] rounded-lg border border-slate-300 bg-white/95 py-1 shadow-2xl backdrop-blur dark:border-slate-700 dark:bg-slate-900/95"
       style={{ left: position.x, top: position.y }}
     >
       {items.map((item) => (
@@ -66,7 +66,7 @@ export default function ContextMenu({
             item.action();
             onClose();
           }}
-          className="block w-full px-3 py-1.5 text-left text-xs text-slate-200 hover:bg-sky-500/20 hover:text-sky-200"
+          className="block w-full px-3 py-1.5 text-left text-xs text-slate-800 hover:bg-sky-500/20 hover:text-sky-700 dark:text-slate-200 dark:hover:text-sky-200"
         >
           [{item.label}]
         </button>

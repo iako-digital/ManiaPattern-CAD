@@ -92,7 +92,7 @@ export default function SettingsPage() {
 
   if (authLoading) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-slate-950 text-slate-400">
+      <main className="flex min-h-screen items-center justify-center bg-slate-50 text-slate-500 dark:bg-slate-950 dark:text-slate-400">
         …
       </main>
     );
@@ -100,8 +100,8 @@ export default function SettingsPage() {
 
   if (!user) {
     return (
-      <main className="flex min-h-screen flex-col items-center justify-center gap-4 bg-slate-950 p-8 text-slate-100">
-        <p className="text-sm text-slate-400">{t("auth.loggedInAs")}: —</p>
+      <main className="flex min-h-screen flex-col items-center justify-center gap-4 bg-slate-50 p-8 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+        <p className="text-sm text-slate-500 dark:text-slate-400">{t("auth.loggedInAs")}: —</p>
         <Link
           href="/login"
           className="rounded-md border border-sky-700 bg-sky-700/90 px-4 py-2 text-sm font-medium text-white hover:bg-sky-600"
@@ -113,18 +113,18 @@ export default function SettingsPage() {
   }
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-2xl flex-col gap-6 bg-slate-950 p-8 text-slate-100">
+    <main className="mx-auto flex min-h-screen max-w-2xl flex-col gap-6 bg-slate-50 p-8 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-xl font-semibold tracking-tight">{t("settings.title")}</h1>
           <p className="text-sm text-slate-500">{t("settings.subtitle")}</p>
-          <p className="mt-1 text-xs text-slate-600">
+          <p className="mt-1 text-xs text-slate-500 dark:text-slate-600">
             {t("auth.loggedInAs")}: {user.email}
           </p>
         </div>
         <Link
           href="/"
-          className="rounded-md border border-slate-800 bg-slate-900/60 px-3 py-1.5 text-xs text-slate-200 hover:border-sky-600 hover:bg-sky-900/30 hover:text-sky-200"
+          className="rounded-md border border-slate-300 bg-slate-100 px-3 py-1.5 text-xs text-slate-800 hover:border-sky-600 hover:bg-sky-100 hover:text-sky-700 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-200 dark:hover:bg-sky-900/30 dark:hover:text-sky-200"
         >
           ← Canvas
         </Link>
@@ -132,8 +132,8 @@ export default function SettingsPage() {
 
       <SavedCardsPanel cards={cards} removingId={removingCardId} onRemove={handleRemoveCard} />
 
-      <div className="rounded-lg border border-red-900/50 bg-slate-950/80 p-4">
-        <h3 className="text-sm font-semibold text-red-300">{t("settings.dangerZone")}</h3>
+      <div className="rounded-lg border border-red-300 bg-white/80 p-4 dark:border-red-900/50 dark:bg-slate-950/80">
+        <h3 className="text-sm font-semibold text-red-600 dark:text-red-300">{t("settings.dangerZone")}</h3>
 
         {accountStatus === "ACTIVE" ? (
           <>
@@ -148,7 +148,7 @@ export default function SettingsPage() {
           </>
         ) : (
           <>
-            <p className="mt-1 text-xs text-amber-300">
+            <p className="mt-1 text-xs text-amber-600 dark:text-amber-300">
               {t("settings.accountStatusPending")}
               {scheduledFor && (
                 <>
@@ -175,7 +175,7 @@ export default function SettingsPage() {
       />
 
       {toast && (
-        <div className="pointer-events-none fixed bottom-4 right-4 rounded-md border border-slate-700 bg-slate-900/95 px-3 py-2 text-xs text-slate-200 shadow-xl">
+        <div className="pointer-events-none fixed bottom-4 right-4 rounded-md border border-slate-300 bg-white/95 px-3 py-2 text-xs text-slate-800 shadow-xl dark:border-slate-700 dark:bg-slate-900/95 dark:text-slate-200">
           {toast}
         </div>
       )}

@@ -15,9 +15,9 @@ interface AdminUser {
 }
 
 const STATUS_COLORS: Record<AdminUser["status"], string> = {
-  ACTIVE: "text-emerald-300",
-  SUSPENDED: "text-amber-300",
-  PENDING_DELETION: "text-red-300",
+  ACTIVE: "text-emerald-600 dark:text-emerald-300",
+  SUSPENDED: "text-amber-600 dark:text-amber-300",
+  PENDING_DELETION: "text-red-600 dark:text-red-300",
 };
 
 export default function UsersTab() {
@@ -62,12 +62,12 @@ export default function UsersTab() {
     }
   }
 
-  if (error) return <p className="text-sm text-red-400">{error}</p>;
+  if (error) return <p className="text-sm text-red-500 dark:text-red-400">{error}</p>;
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-slate-800">
+    <div className="overflow-x-auto rounded-lg border border-slate-300 dark:border-slate-800">
       <table className="w-full text-left text-xs">
-        <thead className="bg-slate-900/60 text-slate-500">
+        <thead className="bg-slate-100 text-slate-500 dark:bg-slate-900/60">
           <tr>
             <th className="px-3 py-2">{t("admin.users.email")}</th>
             <th className="px-3 py-2">{t("admin.users.role")}</th>
@@ -78,9 +78,9 @@ export default function UsersTab() {
         </thead>
         <tbody>
           {users.map((u) => (
-            <tr key={u.id} className="border-t border-slate-800">
-              <td className="px-3 py-2 text-slate-200">{u.email}</td>
-              <td className="px-3 py-2 text-slate-400">{u.role}</td>
+            <tr key={u.id} className="border-t border-slate-300 dark:border-slate-800">
+              <td className="px-3 py-2 text-slate-800 dark:text-slate-200">{u.email}</td>
+              <td className="px-3 py-2 text-slate-600 dark:text-slate-400">{u.role}</td>
               <td className={`px-3 py-2 font-medium ${STATUS_COLORS[u.status]}`}>{u.status}</td>
               <td className="px-3 py-2 text-slate-500">{new Date(u.createdAt).toLocaleDateString()}</td>
               <td className="px-3 py-2">
@@ -90,7 +90,7 @@ export default function UsersTab() {
                       type="button"
                       disabled={busyId === u.id}
                       onClick={() => runAction(u.id, "freeze")}
-                      className="rounded border border-slate-800 px-2 py-1 text-slate-300 hover:border-amber-600 hover:text-amber-300 disabled:opacity-50"
+                      className="rounded border border-slate-300 px-2 py-1 text-slate-700 hover:border-amber-600 hover:text-amber-700 disabled:opacity-50 dark:border-slate-800 dark:text-slate-300 dark:hover:text-amber-300"
                     >
                       {t("admin.users.freeze")}
                     </button>
@@ -100,7 +100,7 @@ export default function UsersTab() {
                       type="button"
                       disabled={busyId === u.id}
                       onClick={() => runAction(u.id, "restore")}
-                      className="rounded border border-slate-800 px-2 py-1 text-slate-300 hover:border-emerald-600 hover:text-emerald-300 disabled:opacity-50"
+                      className="rounded border border-slate-300 px-2 py-1 text-slate-700 hover:border-emerald-600 hover:text-emerald-700 disabled:opacity-50 dark:border-slate-800 dark:text-slate-300 dark:hover:text-emerald-300"
                     >
                       {t("admin.users.restore")}
                     </button>
@@ -109,7 +109,7 @@ export default function UsersTab() {
                     type="button"
                     disabled={busyId === u.id}
                     onClick={() => runAction(u.id, "purge")}
-                    className="rounded border border-slate-800 px-2 py-1 text-slate-300 hover:border-red-700 hover:text-red-300 disabled:opacity-50"
+                    className="rounded border border-slate-300 px-2 py-1 text-slate-700 hover:border-red-700 hover:text-red-700 disabled:opacity-50 dark:border-slate-800 dark:text-slate-300 dark:hover:text-red-300"
                   >
                     {t("admin.users.purge")}
                   </button>

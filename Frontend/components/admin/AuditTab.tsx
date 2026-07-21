@@ -36,13 +36,13 @@ export default function AuditTab() {
     };
   }, []);
 
-  if (error) return <p className="text-sm text-red-400">{error}</p>;
+  if (error) return <p className="text-sm text-red-500 dark:text-red-400">{error}</p>;
   if (logs.length === 0) return <p className="text-sm text-slate-500">{t("admin.audit.empty")}</p>;
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-slate-800">
+    <div className="overflow-x-auto rounded-lg border border-slate-300 dark:border-slate-800">
       <table className="w-full text-left text-xs">
-        <thead className="bg-slate-900/60 text-slate-500">
+        <thead className="bg-slate-100 text-slate-500 dark:bg-slate-900/60">
           <tr>
             <th className="px-3 py-2">{t("admin.audit.pattern")}</th>
             <th className="px-3 py-2">{t("admin.audit.recipient")}</th>
@@ -52,10 +52,10 @@ export default function AuditTab() {
         </thead>
         <tbody>
           {logs.map((log) => (
-            <tr key={log.id} className="border-t border-slate-800">
-              <td className="px-3 py-2 text-slate-200">{log.patternItem.title}</td>
-              <td className="px-3 py-2 text-slate-400">{log.recipient.email}</td>
-              <td className="px-3 py-2 text-slate-400 uppercase">{log.fileType}</td>
+            <tr key={log.id} className="border-t border-slate-300 dark:border-slate-800">
+              <td className="px-3 py-2 text-slate-800 dark:text-slate-200">{log.patternItem.title}</td>
+              <td className="px-3 py-2 text-slate-600 dark:text-slate-400">{log.recipient.email}</td>
+              <td className="px-3 py-2 text-slate-600 uppercase dark:text-slate-400">{log.fileType}</td>
               <td className="px-3 py-2 text-slate-500">{new Date(log.issuedAt).toLocaleString()}</td>
             </tr>
           ))}

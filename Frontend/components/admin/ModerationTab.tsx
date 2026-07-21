@@ -51,7 +51,7 @@ export default function ModerationTab() {
     }
   }
 
-  if (error) return <p className="text-sm text-red-400">{error}</p>;
+  if (error) return <p className="text-sm text-red-500 dark:text-red-400">{error}</p>;
   if (patterns.length === 0) return <p className="text-sm text-slate-500">{t("admin.moderation.empty")}</p>;
 
   return (
@@ -59,10 +59,10 @@ export default function ModerationTab() {
       {patterns.map((p) => (
         <li
           key={p.id}
-          className="flex items-center justify-between rounded-lg border border-slate-800 bg-slate-950/80 px-4 py-3"
+          className="flex items-center justify-between rounded-lg border border-slate-300 bg-white/80 px-4 py-3 dark:border-slate-800 dark:bg-slate-950/80"
         >
           <div>
-            <p className="text-sm text-slate-100">{p.title}</p>
+            <p className="text-sm text-slate-900 dark:text-slate-100">{p.title}</p>
             <p className="text-xs text-slate-500">
               {p.category} · {p.currency} {p.price} · {t("admin.moderation.byAuthor")} {p.author.email}
             </p>

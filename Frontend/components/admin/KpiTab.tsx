@@ -20,9 +20,9 @@ function formatUsd(value: number): string {
 
 function Stat({ label, value }: { label: string; value: string | number }) {
   return (
-    <div className="rounded-lg border border-slate-800 bg-slate-950/80 p-4">
+    <div className="rounded-lg border border-slate-300 bg-white/80 p-4 dark:border-slate-800 dark:bg-slate-950/80">
       <p className="text-[11px] uppercase tracking-wide text-slate-500">{label}</p>
-      <p className="mt-1 text-xl font-semibold text-slate-100">{value}</p>
+      <p className="mt-1 text-xl font-semibold text-slate-900 dark:text-slate-100">{value}</p>
     </div>
   );
 }
@@ -50,7 +50,7 @@ export default function KpiTab() {
     };
   }, []);
 
-  if (error) return <p className="text-sm text-red-400">{error}</p>;
+  if (error) return <p className="text-sm text-red-500 dark:text-red-400">{error}</p>;
   if (!kpis) return <p className="text-sm text-slate-500">…</p>;
 
   return (

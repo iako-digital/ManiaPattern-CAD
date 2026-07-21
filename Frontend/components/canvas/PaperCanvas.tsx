@@ -7,6 +7,7 @@ import {
   useRef,
 } from "react";
 import paper from "paper";
+import { useTheme } from "next-themes";
 import type {
   CanvasHandle,
   CanvasStatus,
@@ -19,6 +20,41 @@ const MAX_ZOOM = 40;
 const DEFAULT_ZOOM = 4; // px per mm
 const NOTCH_DEPTH_MM = 4;
 const HIT_TOLERANCE_PX = 7;
+
+interface CanvasPalette {
+  gridBg: string;
+  gridMinor: string;
+  gridMajor: string;
+  gridAxis: string;
+  gridText: string;
+  outlineStroke: string;
+  outlineFill: [number, number, number, number];
+}
+
+const PALETTES: Record<"dark" | "light", CanvasPalette> = {
+  dark: {
+    gridBg: "#1e1e24",
+    gridMinor: "rgba(147, 197, 253, 0.16)",
+    gridMajor: "rgba(96, 165, 250, 0.45)",
+    gridAxis: "rgba(59, 130, 246, 0.9)",
+    gridText: "rgba(191, 219, 254, 0.75)",
+    outlineStroke: "#38bdf8",
+    outlineFill: [0.15, 0.35, 0.55, 0.12],
+  },
+  light: {
+    gridBg: "#f4f6f9",
+    gridMinor: "rgba(71, 85, 105, 0.18)",
+    gridMajor: "rgba(51, 65, 85, 0.45)",
+    gridAxis: "rgba(37, 99, 235, 0.75)",
+    gridText: "rgba(51, 65, 85, 0.75)",
+    outlineStroke: "#1e293b",
+    outlineFill: [0.55, 0.65, 0.8, 0.08],
+  },
+};
+
+function getPalette(mode: string | undefined): CanvasPalette {
+  return PALETTES[mode === "light" ? "light" : "dark"];
+}
 
 type DragMode =
   | { kind: "none" }
@@ -205,6 +241,9 @@ const PaperCanvas = forwardRef<CanvasHandle, PaperCanvasProps>(function PaperCan
   { activeTool, annotationText, annotationRotation, onContextMenuRequest, onStatusChange, onToast },
   ref,
 ) {
+  const { resolvedTheme } = useTheme();
+  const paletteRef = useRef<CanvasPalette>(getPalette(resolvedTheme));
+
   const containerRef = useRef<HTMLDivElement>(null);
   const gridCanvasRef = useRef<HTMLCanvasElement>(null);
   const paperCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -249,6 +288,23 @@ const PaperCanvas = forwardRef<CanvasHandle, PaperCanvasProps>(function PaperCan
   useEffect(() => {
     annotationRotationRef.current = annotationRotation;
   }, [annotationRotation]);
+
+  useEffect(() => {
+    paletteRef.current = getPalette(resolvedTheme);
+    const artLayer = artLayerRef.current;
+    if (artLayer) {
+      const palette = paletteRef.current;
+      for (const child of artLayer.children) {
+        if (child.data?.kind !== "piece") continue;
+        const outline = getPieceOutline(child as paper.Group);
+        if (!outline || (child as paper.Group).data.mirrored) continue;
+        outline.strokeColor = new paper.Color(palette.outlineStroke);
+        outline.fillColor = new paper.Color(...palette.outlineFill);
+      }
+    }
+    scheduleDraw();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resolvedTheme]);
 
   function screenToMm(clientX: number, clientY: number): paper.Point {
     const canvas = paperCanvasRef.current;
@@ -298,8 +354,9 @@ const PaperCanvas = forwardRef<CanvasHandle, PaperCanvasProps>(function PaperCan
     if (!ctx) return;
     const { width, height } = sizeRef.current;
     const dpr = window.devicePixelRatio || 1;
+    const palette = paletteRef.current;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.fillStyle = "#020617";
+    ctx.fillStyle = palette.gridBg;
     ctx.fillRect(0, 0, width, height);
 
     const zoom = zoomRef.current;
@@ -319,7 +376,7 @@ const PaperCanvas = forwardRef<CanvasHandle, PaperCanvasProps>(function PaperCan
     const mmToScreenY = (mm: number) => height / 2 + (mm - center.y) * zoom;
 
     if (showMinor) {
-      ctx.strokeStyle = "rgba(100, 116, 139, 0.25)";
+      ctx.strokeStyle = palette.gridMinor;
       ctx.lineWidth = 1;
       ctx.beginPath();
       const start = Math.floor(leftMm / minor) * minor;
@@ -337,7 +394,7 @@ const PaperCanvas = forwardRef<CanvasHandle, PaperCanvasProps>(function PaperCan
       ctx.stroke();
     }
 
-    ctx.strokeStyle = "rgba(148, 163, 184, 0.55)";
+    ctx.strokeStyle = palette.gridMajor;
     ctx.lineWidth = 1;
     ctx.beginPath();
     const startMajorX = Math.floor(leftMm / major) * major;
@@ -354,7 +411,7 @@ const PaperCanvas = forwardRef<CanvasHandle, PaperCanvasProps>(function PaperCan
     }
     ctx.stroke();
 
-    ctx.fillStyle = "rgba(148, 163, 184, 0.7)";
+    ctx.fillStyle = palette.gridText;
     ctx.font = "10px ui-monospace, monospace";
     for (let x = startMajorX; x <= rightMm; x += major) {
       if (Math.abs(x) < major / 2) continue;
@@ -365,7 +422,7 @@ const PaperCanvas = forwardRef<CanvasHandle, PaperCanvasProps>(function PaperCan
       ctx.fillText(`${Math.round(y)}`, 3, mmToScreenY(y) - 3);
     }
 
-    ctx.strokeStyle = "rgba(56, 189, 248, 0.85)";
+    ctx.strokeStyle = palette.gridAxis;
     ctx.lineWidth = 1.5;
     ctx.beginPath();
     const ox = mmToScreenX(0);
@@ -503,9 +560,9 @@ const PaperCanvas = forwardRef<CanvasHandle, PaperCanvasProps>(function PaperCan
       closed: opts.closed,
     });
     outline.data = { kind: "outline" };
-    outline.strokeColor = new paper.Color("#38bdf8");
+    outline.strokeColor = new paper.Color(paletteRef.current.outlineStroke);
     outline.strokeWidth = 1.2;
-    outline.fillColor = new paper.Color(0.15, 0.35, 0.55, 0.12);
+    outline.fillColor = new paper.Color(...paletteRef.current.outlineFill);
     const children: paper.Item[] = [outline];
 
     if (opts.withGrainline) {
@@ -1036,9 +1093,9 @@ const PaperCanvas = forwardRef<CanvasHandle, PaperCanvasProps>(function PaperCan
       }
       mirror.remove();
 
-      merged.strokeColor = new paper.Color("#38bdf8");
+      merged.strokeColor = new paper.Color(paletteRef.current.outlineStroke);
       merged.strokeWidth = 1.2;
-      merged.fillColor = new paper.Color(0.15, 0.35, 0.55, 0.12);
+      merged.fillColor = new paper.Color(...paletteRef.current.outlineFill);
       merged.data = { kind: "outline" };
 
       const grainline = getPieceGrainline(piece);
@@ -1098,7 +1155,7 @@ const PaperCanvas = forwardRef<CanvasHandle, PaperCanvasProps>(function PaperCan
         if (outline) {
           outline.strokeColor = piece.data.mirrored
             ? new paper.Color("#fb923c")
-            : new paper.Color("#38bdf8");
+            : new paper.Color(paletteRef.current.outlineStroke);
         }
       });
       scheduleDraw();
@@ -1259,7 +1316,10 @@ const PaperCanvas = forwardRef<CanvasHandle, PaperCanvasProps>(function PaperCan
   }));
 
   return (
-    <div ref={containerRef} className="relative h-full w-full overflow-hidden rounded-lg border border-slate-800">
+    <div
+      ref={containerRef}
+      className="relative h-full w-full overflow-hidden rounded-lg border border-slate-300 dark:border-slate-800"
+    >
       <canvas ref={gridCanvasRef} className="absolute inset-0 h-full w-full" style={{ pointerEvents: "none" }} />
       <canvas
         ref={paperCanvasRef}
