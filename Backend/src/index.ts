@@ -14,5 +14,5 @@ app.use("/api/health", healthRouter);
 app.use("/api/projects", projectsRouter);
 
 app.listen(port, () => {
-  console.log(`CloudPattern CAD backend listening on port ${port}`);
+  console.log(`ManiaPattern CAD backend listening on port ${port}`);
 });

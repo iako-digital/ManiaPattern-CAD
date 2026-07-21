@@ -7,23 +7,53 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+  CONSTRUCTOR
+  FACTORY_ADMIN
+  BUYER
+  ADMIN
+}
+
+enum PurchaseStatus {
+  PENDING
+  COMPLETED
+  REFUNDED
+}
+
 model User {
-  id        String    @id @default(uuid())
-  email     String    @unique
+  id        String   @id @default(uuid())
+  email     String   @unique
   name      String?
-  projects  Project[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  role      UserRole @default(BUYER)
+
+  // Azure AD / OAuth integration
+  azureAdObjectId String? @unique
+  azureTenantId   String?
+  oauthProvider   String?
+  oauthProviderId String?
+
+  // Payout wallet details (for constructors/factories selling patterns)
+  payoutProvider  String?
+  payoutAccountId String?
+  payoutMetadata  Json?
+
+  projects        Project[]
+  authoredPatterns PatternItem[]        @relation("AuthoredPatterns")
+  purchases       Purchase[]            @relation("Purchases")
+  watermarkLogs   WatermarkAuditLog[]   @relation("WatermarkRecipient")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Project {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   name      String
   ownerId   String
-  owner     User     @relation(fields: [ownerId], references: [id])
+  owner     User      @relation(fields: [ownerId], references: [id])
   drawings  Drawing[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 model Drawing {
@@ -34,4 +64,68 @@ model Drawing {
   paperData Json
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model PatternItem {
+  id                 String   @id @default(uuid())
+  title              String
+  description        String?
+  price              Decimal  @db.Decimal(10, 2)
+  currency           String   @default("USD")
+  category           String
+  previewImages      Json
+  dxfFileUrl         String?
+  pdfFileUrl         String?
+  ecoEfficiencyScore Float?
+  rating             Float?   @default(0)
+
+  authorId String
+  author   User   @relation("AuthoredPatterns", fields: [authorId], references: [id])
+
+  purchases      Purchase[]
+  watermarkLogs  WatermarkAuditLog[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([authorId])
+  @@index([category])
+}
+
+model Purchase {
+  id            String         @id @default(uuid())
+  buyerId       String
+  buyer         User           @relation("Purchases", fields: [buyerId], references: [id])
+  patternItemId String
+  patternItem   PatternItem    @relation(fields: [patternItemId], references: [id])
+  amount        Decimal        @db.Decimal(10, 2)
+  currency      String         @default("USD")
+  transactionId String         @unique
+  status        PurchaseStatus @default(PENDING)
+
+  watermarkLogs WatermarkAuditLog[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([buyerId])
+  @@index([patternItemId])
+}
+
+model WatermarkAuditLog {
+  id              String   @id @default(uuid())
+  patternItemId   String
+  patternItem     PatternItem @relation(fields: [patternItemId], references: [id])
+  purchaseId      String?
+  purchase        Purchase?   @relation(fields: [purchaseId], references: [id])
+  recipientUserId String
+  recipient       User        @relation("WatermarkRecipient", fields: [recipientUserId], references: [id])
+  watermarkToken  String      @unique
+  fileType        String
+  ipAddress       String?
+  userAgent       String?
+  issuedAt        DateTime    @default(now())
+
+  @@index([patternItemId])
+  @@index([recipientUserId])
 }

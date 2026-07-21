@@ -1,0 +1,61 @@
+{
+  "app.title": "ManiaPattern CAD",
+  "canvas.heading": "Полотно чертежа",
+  "canvas.gridLabel": "Миллиметровка",
+  "nav.projects": "Проекты",
+
+  "header.modelTitle": "Модель",
+  "header.untitled": "Без названия",
+  "header.save": "Сохранить",
+  "header.saved": "Сохранено",
+  "header.export": "Экспорт",
+  "header.exportDxf": "DXF (AAMA/ASTM)",
+  "header.exportHpgl": "HPGL",
+  "header.exportGcode": "G-Code",
+  "header.language": "Язык",
+
+  "toolbar.groups.point.title": "Точка/Отверстие",
+  "toolbar.groups.point.point": "Точка",
+  "toolbar.groups.point.hole": "Отверстие",
+
+  "toolbar.groups.notch.title": "Надсечка",
+  "toolbar.groups.notch.typology1": "Типология-1 (4мм)",
+
+  "toolbar.groups.digitize.title": "Оцифровка",
+  "toolbar.groups.digitize.line": "Линия",
+  "toolbar.groups.digitize.bezier": "Безье",
+
+  "toolbar.groups.annotation.title": "Аннотация",
+  "toolbar.groups.annotation.placeholder": "Текст метки",
+  "toolbar.groups.annotation.rotation": "Поворот",
+  "toolbar.groups.annotation.place": "Разместить",
+
+  "toolbar.groups.macros.title": "Макросы",
+  "toolbar.groups.macros.sleeve": "Сгенерировать рукав",
+  "toolbar.groups.macros.waistband": "Сгенерировать пояс",
+  "toolbar.groups.macros.extract": "Извлечь деталь",
+
+  "toolbar.groups.geometry.title": "Геометрия",
+  "toolbar.groups.geometry.warp": "Деформация узла",
+  "toolbar.groups.geometry.smooth": "Сглаживание",
+  "toolbar.groups.geometry.align": "Выровнять по оси",
+
+  "contextMenu.save": "Сохранить",
+  "contextMenu.selectAll": "Выделить все",
+  "contextMenu.deselectAll": "Отменить выделение",
+  "contextMenu.changeSign": "Сменить знак",
+  "contextMenu.alignGrainline": "Выровнять долевую",
+
+  "status.zoom": "Масштаб",
+  "status.tool": "Инструмент",
+  "status.selection": "Выделение",
+
+  "tools.select": "Выбор",
+  "tools.point": "Точка",
+  "tools.hole": "Отверстие",
+  "tools.notch": "Надсечка",
+  "tools.digitizeLine": "Оцифровка (линия)",
+  "tools.digitizeBezier": "Оцифровка (Безье)",
+  "tools.annotation": "Аннотация",
+  "tools.warpNode": "Деформация узла"
+}

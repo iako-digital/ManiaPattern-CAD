@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-CimInstance Win32_Process -Filter \"Name = 'node.exe'\")",
+      "Bash(taskkill //PID 1256 //F)",
+      "Bash(taskkill //PID 19012 //F)",
+      "PowerShell(Get-Command gh -ErrorAction SilentlyContinue)"
+    ]
+  }
+}

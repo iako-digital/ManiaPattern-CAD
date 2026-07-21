@@ -1,0 +1,61 @@
+{
+  "app.title": "ManiaPattern CAD",
+  "canvas.heading": "სახაზავი ტილო",
+  "canvas.gridLabel": "მილიმეტრული ბადე",
+  "nav.projects": "პროექტები",
+
+  "header.modelTitle": "მოდელი",
+  "header.untitled": "უსახელო დეტალი",
+  "header.save": "შენახვა",
+  "header.saved": "შენახულია",
+  "header.export": "ექსპორტი",
+  "header.exportDxf": "DXF (AAMA/ASTM)",
+  "header.exportHpgl": "HPGL",
+  "header.exportGcode": "G-Code",
+  "header.language": "ენა",
+
+  "toolbar.groups.point.title": "წერტილი/ხვრელი",
+  "toolbar.groups.point.point": "წერტილი",
+  "toolbar.groups.point.hole": "ხვრელი",
+
+  "toolbar.groups.notch.title": "ჩანაჭერი",
+  "toolbar.groups.notch.typology1": "ტიპოლოგია-1 (4მმ)",
+
+  "toolbar.groups.digitize.title": "უწყვეტი ციფრვა",
+  "toolbar.groups.digitize.line": "ხაზი",
+  "toolbar.groups.digitize.bezier": "ბეზიე",
+
+  "toolbar.groups.annotation.title": "ანოტაცია",
+  "toolbar.groups.annotation.placeholder": "ტექსტი",
+  "toolbar.groups.annotation.rotation": "შემობრუნება",
+  "toolbar.groups.annotation.place": "განთავსება",
+
+  "toolbar.groups.macros.title": "მაკროები",
+  "toolbar.groups.macros.sleeve": "სახელოს გენერაცია",
+  "toolbar.groups.macros.waistband": "წელის სარტყლის გენერაცია",
+  "toolbar.groups.macros.extract": "ქვედეტალის ამოღება",
+
+  "toolbar.groups.geometry.title": "გეომეტრია",
+  "toolbar.groups.geometry.warp": "კვანძის დეფორმაცია",
+  "toolbar.groups.geometry.smooth": "სპლაინის დაგლუვება",
+  "toolbar.groups.geometry.align": "ღერძის გასწორება",
+
+  "contextMenu.save": "შენახვა",
+  "contextMenu.selectAll": "ყველას მონიშვნა",
+  "contextMenu.deselectAll": "მონიშვნის მოხსნა",
+  "contextMenu.changeSign": "ნიშნის შეცვლა",
+  "contextMenu.alignGrainline": "ძაფის ხაზის გასწორება",
+
+  "status.zoom": "მასშტაბი",
+  "status.tool": "ინსტრუმენტი",
+  "status.selection": "მონიშვნა",
+
+  "tools.select": "მონიშვნა",
+  "tools.point": "წერტილი",
+  "tools.hole": "ხვრელი",
+  "tools.notch": "ჩანაჭერი",
+  "tools.digitizeLine": "ციფრვა (ხაზი)",
+  "tools.digitizeBezier": "ციფრვა (ბეზიე)",
+  "tools.annotation": "ანოტაცია",
+  "tools.warpNode": "კვანძის დეფორმაცია"
+}

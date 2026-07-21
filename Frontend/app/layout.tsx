@@ -3,8 +3,8 @@ import I18nProvider from "@/components/I18nProvider";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "CloudPattern CAD",
-  description: "Browser-based CAD drafting for cloud pattern design",
+  title: "ManiaPattern CAD",
+  description: "Browser-based CAD drafting for apparel pattern design",
 };
 
 export default function RootLayout({

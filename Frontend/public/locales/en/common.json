@@ -1,5 +1,61 @@
 {
-  "app.title": "CloudPattern CAD",
+  "app.title": "ManiaPattern CAD",
   "canvas.heading": "Drafting Canvas",
-  "nav.projects": "Projects"
+  "canvas.gridLabel": "Millimeter Grid",
+  "nav.projects": "Projects",
+
+  "header.modelTitle": "Model",
+  "header.untitled": "Untitled Piece",
+  "header.save": "Save",
+  "header.saved": "Saved",
+  "header.export": "Export",
+  "header.exportDxf": "DXF (AAMA/ASTM)",
+  "header.exportHpgl": "HPGL",
+  "header.exportGcode": "G-Code",
+  "header.language": "Language",
+
+  "toolbar.groups.point.title": "Point / Hole",
+  "toolbar.groups.point.point": "Point",
+  "toolbar.groups.point.hole": "Hole",
+
+  "toolbar.groups.notch.title": "Tech Notches",
+  "toolbar.groups.notch.typology1": "Typology-1 (4mm)",
+
+  "toolbar.groups.digitize.title": "Continuous Digitizing",
+  "toolbar.groups.digitize.line": "Line",
+  "toolbar.groups.digitize.bezier": "Bezier",
+
+  "toolbar.groups.annotation.title": "Annotations",
+  "toolbar.groups.annotation.placeholder": "Label text",
+  "toolbar.groups.annotation.rotation": "Rotation",
+  "toolbar.groups.annotation.place": "Place",
+
+  "toolbar.groups.macros.title": "Macros",
+  "toolbar.groups.macros.sleeve": "Generate Sleeve",
+  "toolbar.groups.macros.waistband": "Generate Waistband",
+  "toolbar.groups.macros.extract": "Extract Sub-piece",
+
+  "toolbar.groups.geometry.title": "Geometry Modifiers",
+  "toolbar.groups.geometry.warp": "Single-Node Warper",
+  "toolbar.groups.geometry.smooth": "Spline Smoothing",
+  "toolbar.groups.geometry.align": "Axis Alignment",
+
+  "contextMenu.save": "Save",
+  "contextMenu.selectAll": "Select All",
+  "contextMenu.deselectAll": "Deselect",
+  "contextMenu.changeSign": "Change Sign",
+  "contextMenu.alignGrainline": "Align Grainline",
+
+  "status.zoom": "Zoom",
+  "status.tool": "Tool",
+  "status.selection": "Selection",
+
+  "tools.select": "Select",
+  "tools.point": "Point",
+  "tools.hole": "Hole",
+  "tools.notch": "Notch",
+  "tools.digitizeLine": "Digitize (Line)",
+  "tools.digitizeBezier": "Digitize (Bezier)",
+  "tools.annotation": "Annotation",
+  "tools.warpNode": "Node Warper"
 }
