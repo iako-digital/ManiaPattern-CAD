@@ -128,6 +128,67 @@ function buildGcode(polylines: number[][][]): string {
   return lines.join("\n");
 }
 
+function buildPdf(polylines: number[][][]): string {
+  const MM_TO_PT = 2.834645669;
+  const MARGIN_MM = 10;
+
+  let minX = Infinity;
+  let minY = Infinity;
+  let maxX = -Infinity;
+  let maxY = -Infinity;
+  polylines.forEach((poly) =>
+    poly.forEach(([x, y]) => {
+      if (x < minX) minX = x;
+      if (x > maxX) maxX = x;
+      if (y < minY) minY = y;
+      if (y > maxY) maxY = y;
+    }),
+  );
+  if (!isFinite(minX)) {
+    minX = 0;
+    minY = 0;
+    maxX = 100;
+    maxY = 100;
+  }
+
+  const pageWidth = (maxX - minX + MARGIN_MM * 2) * MM_TO_PT;
+  const pageHeight = (maxY - minY + MARGIN_MM * 2) * MM_TO_PT;
+  const toPdfX = (x: number) => (x - minX + MARGIN_MM) * MM_TO_PT;
+  const toPdfY = (y: number) => pageHeight - (y - minY + MARGIN_MM) * MM_TO_PT;
+
+  const drawOps: string[] = ["0.75 w", "0 0 0 RG"];
+  polylines.forEach((poly) => {
+    if (poly.length === 0) return;
+    drawOps.push(`${toPdfX(poly[0][0]).toFixed(2)} ${toPdfY(poly[0][1]).toFixed(2)} m`);
+    poly.slice(1).forEach(([x, y]) => {
+      drawOps.push(`${toPdfX(x).toFixed(2)} ${toPdfY(y).toFixed(2)} l`);
+    });
+  });
+  drawOps.push("S");
+  const content = drawOps.join("\n");
+
+  const objects = [
+    "1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n",
+    "2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n",
+    `3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageWidth.toFixed(2)} ${pageHeight.toFixed(2)}] /Contents 4 0 R /Resources << /ProcSet [/PDF] >> >>\nendobj\n`,
+    `4 0 obj\n<< /Length ${content.length} >>\nstream\n${content}\nendstream\nendobj\n`,
+  ];
+
+  let pdf = "%PDF-1.4\n";
+  const offsets: number[] = [0];
+  objects.forEach((obj) => {
+    offsets.push(pdf.length);
+    pdf += obj;
+  });
+  const xrefOffset = pdf.length;
+  pdf += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n`;
+  for (let i = 1; i <= objects.length; i++) {
+    pdf += `${offsets[i].toString().padStart(10, "0")} 00000 n \n`;
+  }
+  pdf += `trailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF\n`;
+  return pdf;
+}
+
 function downloadFile(filename: string, content: string, mime: string) {
   const blob = new Blob([content], { type: mime });
   const url = URL.createObjectURL(blob);
@@ -1089,6 +1150,12 @@ const PaperCanvas = forwardRef<CanvasHandle, PaperCanvasProps>(function PaperCan
       if (!artLayer) return;
       downloadFile("pattern.gcode", buildGcode(collectPolylines(artLayer)), "text/plain");
       onToastRef.current("G-Code exported");
+    },
+    exportPdf() {
+      const artLayer = artLayerRef.current;
+      if (!artLayer) return;
+      downloadFile("pattern.pdf", buildPdf(collectPolylines(artLayer)), "application/pdf");
+      onToastRef.current("PDF exported");
     },
     generateSleeve() {
       const artLayer = artLayerRef.current;

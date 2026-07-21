@@ -12,7 +12,9 @@
   "header.exportDxf": "DXF (AAMA/ASTM)",
   "header.exportHpgl": "HPGL",
   "header.exportGcode": "G-Code",
+  "header.exportPdf": "PDF",
   "header.language": "Language",
+  "header.marketplace": "Marketplace",
 
   "toolbar.groups.point.title": "Point / Hole",
   "toolbar.groups.point.point": "Point",

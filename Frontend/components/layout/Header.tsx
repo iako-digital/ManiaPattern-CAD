@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { SUPPORTED_LANGUAGES, type SupportedLanguage } from "@/lib/i18n";
 
@@ -16,6 +17,7 @@ interface HeaderProps {
   onExportDxf: () => void;
   onExportHpgl: () => void;
   onExportGcode: () => void;
+  onExportPdf: () => void;
 }
 
 export default function Header({
@@ -25,6 +27,7 @@ export default function Header({
   onExportDxf,
   onExportHpgl,
   onExportGcode,
+  onExportPdf,
 }: HeaderProps) {
   const { t, i18n } = useTranslation();
 
@@ -37,6 +40,13 @@ export default function Header({
         <span className="rounded-md border border-slate-800 bg-slate-900/60 px-2 py-0.5 text-xs text-slate-200">
           {modelName}
         </span>
+        <span className="h-4 w-px bg-slate-700" />
+        <Link
+          href="/marketplace"
+          className="rounded-md px-2 py-1 text-xs text-sky-300 transition-colors hover:bg-slate-800 hover:text-sky-200"
+        >
+          {t("header.marketplace")}
+        </Link>
       </div>
 
       <div className="flex items-center gap-2">
@@ -74,6 +84,13 @@ export default function Header({
             className="rounded-md px-2 py-1 text-xs text-slate-200 hover:bg-slate-800"
           >
             {t("header.exportGcode")}
+          </button>
+          <button
+            type="button"
+            onClick={onExportPdf}
+            className="rounded-md px-2 py-1 text-xs text-slate-200 hover:bg-slate-800"
+          >
+            {t("header.exportPdf")}
           </button>
         </div>
 

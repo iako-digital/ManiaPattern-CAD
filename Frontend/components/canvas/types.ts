@@ -27,6 +27,7 @@ export interface CanvasHandle {
   exportDxf: () => void;
   exportHpgl: () => void;
   exportGcode: () => void;
+  exportPdf: () => void;
   generateSleeve: () => void;
   generateWaistband: () => void;
   extractSubpiece: () => void;

@@ -12,7 +12,9 @@
   "header.exportDxf": "DXF (AAMA/ASTM)",
   "header.exportHpgl": "HPGL",
   "header.exportGcode": "G-Code",
+  "header.exportPdf": "PDF",
   "header.language": "Язык",
+  "header.marketplace": "Маркетплейс",
 
   "toolbar.groups.point.title": "Точка/Отверстие",
   "toolbar.groups.point.point": "Точка",

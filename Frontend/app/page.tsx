@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import Header from "@/components/canvas/Header";
+import Header from "@/components/layout/Header";
 import Toolbar from "@/components/canvas/Toolbar";
 import ContextMenu from "@/components/canvas/ContextMenu";
 import { useHotkeys } from "@/components/canvas/useHotkeys";
@@ -65,6 +65,7 @@ export default function HomePage() {
         onExportDxf={() => canvasRef.current?.exportDxf()}
         onExportHpgl={() => canvasRef.current?.exportHpgl()}
         onExportGcode={() => canvasRef.current?.exportGcode()}
+        onExportPdf={() => canvasRef.current?.exportPdf()}
       />
 
       <div className="relative flex flex-1 gap-3 overflow-hidden p-3">

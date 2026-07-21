@@ -12,7 +12,9 @@
   "header.exportDxf": "DXF (AAMA/ASTM)",
   "header.exportHpgl": "HPGL",
   "header.exportGcode": "G-Code",
+  "header.exportPdf": "PDF",
   "header.language": "ენა",
+  "header.marketplace": "მარკეტპლეისი",
 
   "toolbar.groups.point.title": "წერტილი/ხვრელი",
   "toolbar.groups.point.point": "წერტილი",
