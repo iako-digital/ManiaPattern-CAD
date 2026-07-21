@@ -15,6 +15,7 @@
   "header.exportPdf": "PDF",
   "header.language": "Язык",
   "header.marketplace": "Маркетплейс",
+  "header.settings": "Настройки",
 
   "toolbar.groups.point.title": "Точка/Отверстие",
   "toolbar.groups.point.point": "Точка",
@@ -59,5 +60,36 @@
   "tools.digitizeLine": "Оцифровка (линия)",
   "tools.digitizeBezier": "Оцифровка (Безье)",
   "tools.annotation": "Аннотация",
-  "tools.warpNode": "Деформация узла"
+  "tools.warpNode": "Деформация узла",
+
+  "settings.title": "Приватность и аккаунт",
+  "settings.subtitle": "Управление сохранёнными картами и удалением аккаунта.",
+  "settings.userIdLabel": "ID пользователя",
+  "settings.userIdHint": "Только для демонстрации — система входа ещё не подключена, вставьте ID пользователя для теста API.",
+  "settings.userIdRequired": "Сначала введите ID пользователя",
+  "settings.dangerZone": "Опасная зона",
+  "settings.accountStatusActive": "Ваш аккаунт активен.",
+  "settings.accountStatusPending": "Ваш аккаунт назначен к безвозвратному удалению.",
+  "settings.scheduledFor": "Запланировано на",
+  "settings.deleteAccountButton": "Удалить аккаунт",
+  "settings.cancelDeletionButton": "Отменить удаление",
+  "settings.deletionScheduled": "Удаление аккаунта запланировано через 60 дней",
+  "settings.deletionCancelled": "Удаление аккаунта отменено",
+
+  "settings.cards.title": "Сохранённые карты",
+  "settings.cards.empty": "Нет сохранённых способов оплаты.",
+  "settings.cards.default": "По умолчанию",
+  "settings.cards.remove": "Удалить",
+  "settings.cards.removing": "Удаление…",
+  "settings.cards.removed": "Карта удалена",
+
+  "settings.deleteModal.title": "Удалить ваш аккаунт?",
+  "settings.deleteModal.warning": "Ваш аккаунт будет немедленно деактивирован и безвозвратно удалён после 60-дневного периода восстановления. Вы можете отменить удаление в любой момент до этого на этой странице.",
+  "settings.deleteModal.typeDelete": "Введите DELETE для подтверждения",
+  "settings.deleteModal.or": "или",
+  "settings.deleteModal.passwordLabel": "Подтвердите паролем",
+  "settings.deleteModal.cancel": "Отмена",
+  "settings.deleteModal.confirm": "Подтвердить удаление",
+  "settings.deleteModal.confirming": "Обработка…",
+  "settings.deleteModal.errorGeneric": "Что-то пошло не так. Попробуйте снова."
 }

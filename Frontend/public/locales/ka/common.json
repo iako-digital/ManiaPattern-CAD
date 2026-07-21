@@ -15,6 +15,7 @@
   "header.exportPdf": "PDF",
   "header.language": "ენა",
   "header.marketplace": "მარკეტპლეისი",
+  "header.settings": "პარამეტრები",
 
   "toolbar.groups.point.title": "წერტილი/ხვრელი",
   "toolbar.groups.point.point": "წერტილი",
@@ -59,5 +60,36 @@
   "tools.digitizeLine": "ციფრვა (ხაზი)",
   "tools.digitizeBezier": "ციფრვა (ბეზიე)",
   "tools.annotation": "ანოტაცია",
-  "tools.warpNode": "კვანძის დეფორმაცია"
+  "tools.warpNode": "კვანძის დეფორმაცია",
+
+  "settings.title": "კონფიდენციალურობა და ანგარიში",
+  "settings.subtitle": "მართეთ შენახული ბარათები და ანგარიშის წაშლა.",
+  "settings.userIdLabel": "მომხმარებლის ID",
+  "settings.userIdHint": "მხოლოდ დემოსთვის — შესვლის სისტემა ჯერ არ არის მიერთებული, ჩასვით მომხმარებლის ID API-ის სატესტოდ.",
+  "settings.userIdRequired": "ჯერ შეიყვანეთ მომხმარებლის ID",
+  "settings.dangerZone": "საშიში ზონა",
+  "settings.accountStatusActive": "თქვენი ანგარიში აქტიურია.",
+  "settings.accountStatusPending": "თქვენი ანგარიში დაინიშნა სამუდამო წასაშლელად.",
+  "settings.scheduledFor": "დაგეგმილია",
+  "settings.deleteAccountButton": "ანგარიშის წაშლა",
+  "settings.cancelDeletionButton": "წაშლის გაუქმება",
+  "settings.deletionScheduled": "ანგარიშის წაშლა დაიგეგმა 60 დღეში",
+  "settings.deletionCancelled": "ანგარიშის წაშლა გაუქმდა",
+
+  "settings.cards.title": "შენახული ბარათები",
+  "settings.cards.empty": "შენახული გადახდის მეთოდები არ არის.",
+  "settings.cards.default": "ნაგულისხმევი",
+  "settings.cards.remove": "წაშლა",
+  "settings.cards.removing": "იშლება…",
+  "settings.cards.removed": "ბარათი წაიშალა",
+
+  "settings.deleteModal.title": "წავშალოთ თქვენი ანგარიში?",
+  "settings.deleteModal.warning": "თქვენი ანგარიში დაუყოვნებლივ გაითიშება და საბოლოოდ წაიშლება 60-დღიანი აღდგენის პერიოდის შემდეგ. ამ გვერდიდან შეგიძლიათ გააუქმოთ ეს ნებისმიერ დროს ვადის გასვლამდე.",
+  "settings.deleteModal.typeDelete": "დასადასტურებლად აკრიფეთ DELETE",
+  "settings.deleteModal.or": "ან",
+  "settings.deleteModal.passwordLabel": "დაადასტურეთ პაროლით",
+  "settings.deleteModal.cancel": "გაუქმება",
+  "settings.deleteModal.confirm": "დაადასტურეთ წაშლა",
+  "settings.deleteModal.confirming": "მუშავდება…",
+  "settings.deleteModal.errorGeneric": "დაფიქსირდა შეცდომა. სცადეთ ხელახლა."
 }

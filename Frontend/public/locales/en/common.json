@@ -15,6 +15,7 @@
   "header.exportPdf": "PDF",
   "header.language": "Language",
   "header.marketplace": "Marketplace",
+  "header.settings": "Settings",
 
   "toolbar.groups.point.title": "Point / Hole",
   "toolbar.groups.point.point": "Point",
@@ -59,5 +60,36 @@
   "tools.digitizeLine": "Digitize (Line)",
   "tools.digitizeBezier": "Digitize (Bezier)",
   "tools.annotation": "Annotation",
-  "tools.warpNode": "Node Warper"
+  "tools.warpNode": "Node Warper",
+
+  "settings.title": "Privacy & Account",
+  "settings.subtitle": "Manage saved payment methods and account deletion.",
+  "settings.userIdLabel": "User ID",
+  "settings.userIdHint": "Demo only — no login system is wired up yet, so paste a user id to test against the API.",
+  "settings.userIdRequired": "Enter a user ID first",
+  "settings.dangerZone": "Danger Zone",
+  "settings.accountStatusActive": "Your account is active.",
+  "settings.accountStatusPending": "Your account is scheduled for permanent deletion.",
+  "settings.scheduledFor": "Scheduled for",
+  "settings.deleteAccountButton": "Delete Account",
+  "settings.cancelDeletionButton": "Cancel Deletion",
+  "settings.deletionScheduled": "Account scheduled for deletion in 60 days",
+  "settings.deletionCancelled": "Account deletion cancelled",
+
+  "settings.cards.title": "Saved Cards",
+  "settings.cards.empty": "No saved payment methods.",
+  "settings.cards.default": "Default",
+  "settings.cards.remove": "Remove",
+  "settings.cards.removing": "Removing…",
+  "settings.cards.removed": "Card removed",
+
+  "settings.deleteModal.title": "Delete your account?",
+  "settings.deleteModal.warning": "Your account will be deactivated immediately and permanently erased after a 60-day recovery window. You can cancel any time before then from this page.",
+  "settings.deleteModal.typeDelete": "Type DELETE to confirm",
+  "settings.deleteModal.or": "or",
+  "settings.deleteModal.passwordLabel": "Confirm with your password",
+  "settings.deleteModal.cancel": "Cancel",
+  "settings.deleteModal.confirm": "Confirm Deletion",
+  "settings.deleteModal.confirming": "Processing…",
+  "settings.deleteModal.errorGeneric": "Something went wrong. Please try again."
 }

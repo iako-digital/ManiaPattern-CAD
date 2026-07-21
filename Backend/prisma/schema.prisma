@@ -20,11 +20,25 @@ enum PurchaseStatus {
   REFUNDED
 }
 
+enum UserStatus {
+  ACTIVE
+  PENDING_DELETION
+}
+
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
+  id        String     @id @default(uuid())
+  email     String     @unique
   name      String?
-  role      UserRole @default(BUYER)
+  role      UserRole   @default(BUYER)
+  status    UserStatus @default(ACTIVE)
+
+  // Password verification for account-deletion confirmation (GDPR flow).
+  // Optional because Azure AD / OAuth accounts have no local password.
+  passwordHash String?
+
+  // GDPR soft-delete / 60-day recovery window
+  deletedAt                    DateTime?
+  scheduledPermanentDeletionAt DateTime?
 
   // Azure AD / OAuth integration
   azureAdObjectId String? @unique
@@ -37,20 +51,34 @@ model User {
   payoutAccountId String?
   payoutMetadata  Json?
 
-  projects        Project[]
-  authoredPatterns PatternItem[]        @relation("AuthoredPatterns")
-  purchases       Purchase[]            @relation("Purchases")
-  watermarkLogs   WatermarkAuditLog[]   @relation("WatermarkRecipient")
+  projects         Project[]
+  authoredPatterns PatternItem[]         @relation("AuthoredPatterns")
+  purchases        Purchase[]            @relation("Purchases")
+  watermarkLogs    WatermarkAuditLog[]   @relation("WatermarkRecipient")
+  paymentMethods   SavedPaymentMethod[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model SavedPaymentMethod {
+  id                     String   @id @default(uuid())
+  userId                 String
+  user                   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  stripePaymentMethodId  String   @unique
+  brand                  String
+  last4                  String
+  isDefault              Boolean  @default(false)
+  createdAt              DateTime @default(now())
+
+  @@index([userId])
 }
 
 model Project {
   id        String    @id @default(uuid())
   name      String
   ownerId   String
-  owner     User      @relation(fields: [ownerId], references: [id])
+  owner     User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   drawings  Drawing[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -59,7 +87,7 @@ model Project {
 model Drawing {
   id        String   @id @default(uuid())
   projectId String
-  project   Project  @relation(fields: [projectId], references: [id])
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
   title     String
   paperData Json
   createdAt DateTime @default(now())
@@ -80,7 +108,7 @@ model PatternItem {
   rating             Float?   @default(0)
 
   authorId String
-  author   User   @relation("AuthoredPatterns", fields: [authorId], references: [id])
+  author   User   @relation("AuthoredPatterns", fields: [authorId], references: [id], onDelete: Cascade)
 
   purchases      Purchase[]
   watermarkLogs  WatermarkAuditLog[]
@@ -95,9 +123,9 @@ model PatternItem {
 model Purchase {
   id            String         @id @default(uuid())
   buyerId       String
-  buyer         User           @relation("Purchases", fields: [buyerId], references: [id])
+  buyer         User           @relation("Purchases", fields: [buyerId], references: [id], onDelete: Cascade)
   patternItemId String
-  patternItem   PatternItem    @relation(fields: [patternItemId], references: [id])
+  patternItem   PatternItem    @relation(fields: [patternItemId], references: [id], onDelete: Cascade)
   amount        Decimal        @db.Decimal(10, 2)
   currency      String         @default("USD")
   transactionId String         @unique
@@ -115,11 +143,11 @@ model Purchase {
 model WatermarkAuditLog {
   id              String   @id @default(uuid())
   patternItemId   String
-  patternItem     PatternItem @relation(fields: [patternItemId], references: [id])
+  patternItem     PatternItem @relation(fields: [patternItemId], references: [id], onDelete: Cascade)
   purchaseId      String?
-  purchase        Purchase?   @relation(fields: [purchaseId], references: [id])
+  purchase        Purchase?   @relation(fields: [purchaseId], references: [id], onDelete: SetNull)
   recipientUserId String
-  recipient       User        @relation("WatermarkRecipient", fields: [recipientUserId], references: [id])
+  recipient       User        @relation("WatermarkRecipient", fields: [recipientUserId], references: [id], onDelete: Cascade)
   watermarkToken  String      @unique
   fileType        String
   ipAddress       String?
